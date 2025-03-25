@@ -12,10 +12,14 @@ public class Sprint {
     private Long id;
 
     private String name;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @OneToMany
     private List<Issue> issues;
+
+
 }
