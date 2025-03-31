@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/issue")
+@RequestMapping("/api/project/issue")
 public class IssueController {
+
 }

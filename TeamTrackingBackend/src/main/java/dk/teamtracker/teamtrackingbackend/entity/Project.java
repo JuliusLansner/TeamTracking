@@ -14,6 +14,12 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
+    public Project(Long id, String projectName, String description) {
+        this.id = id;
+        this.projectName = projectName;
+        this.description = description;
+    }
+
     private String projectName;
     private String description;
     private double budgetLimit;
