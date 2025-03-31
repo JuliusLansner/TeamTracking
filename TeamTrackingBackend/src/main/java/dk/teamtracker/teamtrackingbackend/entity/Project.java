@@ -13,7 +13,9 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
+    public Project() {
 
+    }
     public Project(Long id, String projectName, String description) {
         this.id = id;
         this.projectName = projectName;
@@ -32,7 +34,6 @@ public class Project {
     private User owner;
     @OneToMany(mappedBy= "project", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Issue> issue;
-
 
 
 
