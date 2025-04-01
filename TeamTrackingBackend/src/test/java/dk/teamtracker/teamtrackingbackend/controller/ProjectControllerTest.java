@@ -7,14 +7,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,4 +50,54 @@ class ProjectControllerTest {
 
     }
 
+    @Test
+    void getProjectById() throws Exception{
+        Long testId = 1L;
+        Project project1 = new Project(testId,"proj1","desc1");
+
+
+        Mockito.when(projRepo.findById(testId)).thenReturn(Optional.of(project1));
+
+        mockMvc.perform(get("/api/project/"+testId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(testId))
+                .andExpect(jsonPath("$.projectName").value("proj1"));
+
+
+    }
+
+    @Test
+    void getProjectById_notFound() throws Exception{
+        Long testId = 2L;
+        Mockito.when(projRepo.findById(testId)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/project"+testId))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void testCreateProject() throws Exception{
+        Long testId = 1L;
+        Project newProject = new Project(testId,"proj1","desc1");
+        Project savedProject = new Project(testId,"proj1","desc1");
+
+        Mockito.when(projRepo.save(Mockito.any(Project.class))).thenReturn(savedProject);
+
+        String requestJson = """
+                {
+                "id":1L,
+                "name": "proj1",
+                "description": "desc1"
+                }
+                """;
+
+        mockMvc.perform(post("/api/project/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(testId))
+                .andExpect(jsonPath("$.projectName").value("proj1"))
+                .andExpect(jsonPath("$.desc").value("desc1"));
+
+    }
 }
