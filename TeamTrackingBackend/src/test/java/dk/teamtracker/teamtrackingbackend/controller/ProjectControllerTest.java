@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -85,19 +87,21 @@ class ProjectControllerTest {
 
         String requestJson = """
                 {
-                "id":1L,
+                "id":"1",
                 "name": "proj1",
                 "description": "desc1"
                 }
                 """;
 
         mockMvc.perform(post("/api/project/create")
+                        .with(csrf())
+                        .with(user("testUser").roles("USER"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(testId))
                 .andExpect(jsonPath("$.projectName").value("proj1"))
-                .andExpect(jsonPath("$.desc").value("desc1"));
+                .andExpect(jsonPath("$.description").value("desc1"));
 
     }
 }

@@ -1,5 +1,6 @@
 package dk.teamtracker.teamtrackingbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,17 +22,15 @@ public class Project {
         this.projectName = projectName;
         this.description = description;
     }
-
+    @JsonProperty("projectName")
     private String projectName;
+    @JsonProperty("description")
     private String description;
     private double budgetLimit;
     private String createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
     @OneToMany(mappedBy= "project", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Issue> issue;
 
