@@ -14,7 +14,6 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long projectId;
 
     private String title;
     private String description;
@@ -24,9 +23,7 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "assignee_id")
-    private User assignee;
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

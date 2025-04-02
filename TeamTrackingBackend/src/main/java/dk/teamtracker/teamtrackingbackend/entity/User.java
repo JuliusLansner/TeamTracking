@@ -24,8 +24,6 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy="owner")
-    private List<Project> ownedProjects;
 
     public User(){}
     public User(String email,String username,String password,UserRole role){
