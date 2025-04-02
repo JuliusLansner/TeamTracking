@@ -44,3 +44,22 @@ POST /register - register account
 POST /reset-password or /forgot-password - resetting lost password
 
 
+User stories:
+
+As as user ...
+
+I want to be able to find all projects (Backend: Missing feature - Only projects made by current user)
+
+I want to be able to create a project (Backend:Done)
+
+I want to add issues to that project(Backend:Done)
+
+I want to assign issues to a user (Backend: )
+
+I want to mark an issue as done (Backend: )
+
+I want to list all tasks assigned to me (Backend: )
+
+I want to be able to make an account (Backend: )
+
+
