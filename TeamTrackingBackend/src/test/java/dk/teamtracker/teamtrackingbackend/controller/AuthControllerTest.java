@@ -36,13 +36,13 @@ class AuthControllerTest {
     public void testAuthenticateUser_success() throws Exception{
         String loginJson = """
             {
-                "username": "testuser",
-                "password": "password"
+                "username": "admin",
+                "password": "admin"
             }
             """;
 
 
-        Authentication dummyAuth = new UsernamePasswordAuthenticationToken("testuser","password",Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
+        Authentication dummyAuth = new UsernamePasswordAuthenticationToken("admin","admin",Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN")));
 
         Mockito.when(authenticationManager.authenticate(Mockito.any(UsernamePasswordAuthenticationToken.class))).thenReturn(dummyAuth);
 
